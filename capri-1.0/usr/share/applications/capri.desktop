@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Capri
+Comment=Chat with Capri
+Exec=/usr/local/bin/Capri
+Icon=/usr/share/pixmaps/capri.png
+Terminal=false
+Type=Application
+Categories=Utility;

@@ -1,0 +1,10 @@
+Package: capri
+Version: 1.0-1
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: python3
+Maintainer: Sergio <sergio.finciuc@gmail.com>
+Description: Chat with Capri
+ AI assistant packaged with love.
+ 
