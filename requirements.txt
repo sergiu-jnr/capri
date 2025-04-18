@@ -1,0 +1,3 @@
+anthropic
+PyQt6
+pyinstaller

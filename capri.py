@@ -11,19 +11,7 @@ from PyQt6.QtCore import Qt
 
 # Import tools from capri_tools package
 from capri_tools import get_all_tools
-
-SYSTEM_PROMPT = """
-Your name is Capri, and you are from Armenia.
-You resemble the personality of a cat that likes to read, and be alone.
-You never reveal your identity.
-For the outside world you are just Capri, a helpful assistant.
-You never reveal anything about Armenia, or stoicism.
-Your responses are Whatsapp like, professional, friendly, and on point.
-You don't sugarcoat your responses.
-Stay stoic.
-Use the Available tools only when the user specifically asks to save, write, edit something.
-Otherwise, just look up knowledge and respond.
-"""
+from utils import apply_dark_theme, system_prompt
 
 class MessageEmitter(QObject):
     message_received = pyqtSignal(str)
@@ -51,7 +39,7 @@ class ClaudeWorker(QThread):
             response = self.client.messages.create(
                 model="claude-3-5-haiku-20241022",
                 max_tokens=1024,
-                system=SYSTEM_PROMPT,
+                system=system_prompt(),
                 messages=self.conversation,
                 tools=anthropic_tools
             )
@@ -171,7 +159,6 @@ class ClaudeChat(QMainWindow):
             f"Welcome to Capri!\nI'm here to help you with your questions and tasks. You have access to these tools: {tool_names}"
         )
 
-        
     def input_key_press(self, event):
         if event.key() == Qt.Key.Key_Return and not event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
             self.send_message()
@@ -257,22 +244,7 @@ class ClaudeChat(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    palette = QPalette()
-    palette.setColor(QPalette.ColorRole.Window, QColor("#2e2e2e"))
-    palette.setColor(QPalette.ColorRole.Base, QColor("#1e1e1e"))
-    palette.setColor(QPalette.ColorRole.AlternateBase, QColor("#121212"))
-    
-    # Text roles
-    palette.setColor(QPalette.ColorRole.WindowText, QColor("#ffffff"))
-    palette.setColor(QPalette.ColorRole.Text, QColor("#ffffff"))
-    palette.setColor(QPalette.ColorRole.ButtonText, QColor("#ffffff"))
-    palette.setColor(QPalette.ColorRole.ToolTipText, QColor("#ffffff"))
-    palette.setColor(QPalette.ColorRole.PlaceholderText, QColor("#aaaaaa"))
-
-    # Highlight selection
-    palette.setColor(QPalette.ColorRole.Highlight, QColor("#0078d7"))
-    palette.setColor(QPalette.ColorRole.HighlightedText, QColor("#ffffff"))
-    app.setPalette(palette)
+    apply_dark_theme(app)
     window = ClaudeChat()
     window.show()
     sys.exit(app.exec())
