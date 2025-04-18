@@ -1,17 +1,15 @@
-from typing import Dict, Any
-import anthropic
-import os
-import sys
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
                            QHBoxLayout, QTextEdit, QPushButton, QSizePolicy)
 from PyQt6.QtCore import Qt, pyqtSignal, QObject, QThread
-import json
-from PyQt6.QtGui import QPalette, QColor
-from PyQt6.QtCore import Qt
 
-# Import tools from capri_tools package
+import anthropic
+import os
+import sys
+import json
+
 from capri_tools import get_all_tools
 from utils import apply_dark_theme, system_prompt
+
 
 class MessageEmitter(QObject):
     message_received = pyqtSignal(str)
