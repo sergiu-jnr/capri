@@ -250,7 +250,7 @@ class ClaudeChat(QMainWindow):
                 self.message_emitter.tool_executed.emit({"result": str(error), "error": True})
                 return {"type": "tool_result", "tool_use_id": id, "content": str(error)}
                 
-            self.message_emitter.tool_executed.emit({"result": response[:100] + "..." if len(response) > 100 else response})
+            self.message_emitter.tool_executed.emit({"result": response[:1000] + "..." if len(response) > 1000 else response})
             return {"type": "tool_result", "tool_use_id": id, "content": response}
         except Exception as e:
             return {"type": "tool_result", "tool_use_id": id, "content": str(e)}
