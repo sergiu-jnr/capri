@@ -8,6 +8,10 @@ __pycache__/
 
 *.deb
 
+.DS_Store
+
+*.dmg
+
 # Distribution / packaging
 .Python
 build/

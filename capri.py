@@ -55,7 +55,7 @@ class ClaudeChat(QMainWindow):
         self.message_emitter.tool_executed.connect(self.display_tool_execution)
         
         # Initialize Anthropic client
-        api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+        api_key = os.environ.get("ANTHROPIC_API_KEY", "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")
         self.client = anthropic.Anthropic(api_key=api_key)
         
         # Initialize conversation and tools

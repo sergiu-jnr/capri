@@ -22,6 +22,24 @@ AI assistant packaged with love.
 
 > pip3 install -r requirements.txt
 
+> python3 capri.py
+
+
+## Generate the .dmg file (MacOS)
+
+> pyinstaller --onefile --windowed capri.py
+
+> mkdir -p Capri.app/Contents/MacOS/
+
+> mkdir -p Capri.app/Contents/Resources/
+
+> cp -f dist/capri Capri.app/Contents/MacOS/Capri
+
+> hdiutil create -volname "Capri" -srcfolder Capri.app -ov -format UDZO Capri-1.0.dmg
+
+### One liner
+
+> pyinstaller --onefile --windowed capri.py && hdiutil create -volname "Capri" -srcfolder Capri.app -ov -format UDZO Capri-1.0.dmg
 
 
 ## Generate the .deb file (Linux)
