@@ -219,7 +219,7 @@ class ClaudeChat(QMainWindow):
         if "name" in tool_data:
             self.chat_history.append(f"\nTool: Using {tool_data['name']} with input: {tool_data['input']}")
         elif "result" in tool_data:
-            self.chat_history.append(f"Result: {tool_data['result']}")
+            self.chat_history.append(tool_data['result'])
         
     def execute_tool(self, id, name, input_data):
         tool_def = next((tool for tool in self.tools if tool.name == name), None)
@@ -235,7 +235,16 @@ class ClaudeChat(QMainWindow):
                 self.message_emitter.tool_executed.emit({"result": str(error), "error": True})
                 return {"type": "tool_result", "tool_use_id": id, "content": str(error)}
                 
-            self.message_emitter.tool_executed.emit({"result": response[:1000] + "..." if len(response) > 1000 else response})
+            lines = response.split('\n')
+            total_lines = len(lines)
+            
+            if total_lines > 50:
+                truncated_response = '\n'.join(lines[:50])
+                truncated_response += f"\n\n(This file contains {total_lines} lines total, showing only the first 50 lines due to chat display limitations)"
+                self.message_emitter.tool_executed.emit({"result": truncated_response})
+            else:
+                self.message_emitter.tool_executed.emit({"result": response})
+                
             return {"type": "tool_result", "tool_use_id": id, "content": response}
         except Exception as e:
             return {"type": "tool_result", "tool_use_id": id, "content": str(e)}

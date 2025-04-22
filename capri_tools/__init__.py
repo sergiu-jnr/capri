@@ -10,6 +10,7 @@ from capri_tools.create_directory import create_directory_tool
 from capri_tools.delete_directory import delete_directory_tool
 from capri_tools.crop_resize_images import crop_resize_images_tool
 from capri_tools.execute_python_file import execute_python_file_tool
+from capri_tools.keep_segments_from_video import keep_segments_from_video_tool
 
 def get_all_tools():
     """Return a list of all available tools. Add new items for Claude to use."""
@@ -25,5 +26,6 @@ def get_all_tools():
         create_directory_tool,
         delete_directory_tool,
         crop_resize_images_tool,
-        execute_python_file_tool
+        execute_python_file_tool,
+        keep_segments_from_video_tool
     ]
