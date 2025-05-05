@@ -7,13 +7,24 @@ from llama_cpp import Llama
 from tools import get_all_tools
 
 class TerminalChat:
-    def __init__(self, model_path: str, verbose: bool = False):
+    def __init__(self):
         # Initialize models for regular chat and function calling
-        self.model_regular = Llama(model_path=model_path, chat_format="chatml")
-        self.model_function = Llama(model_path=model_path, chat_format="chatml-function-calling")
-        
+        # self.model_regular = Llama(model_path=model_path, chat_format="chatml")
+        # self.model_function = Llama(model_path=model_path, chat_format="chatml-function-calling")
+
+        self.model_regular  = Llama.from_pretrained(
+            repo_id="bartowski/NousResearch_DeepHermes-3-Llama-3-3B-Preview-GGUF",
+            filename="NousResearch_DeepHermes-3-Llama-3-3B-Preview-Q8_0.gguf",
+            chat_format="chatml"
+        )
+        self.model_function  = Llama.from_pretrained(
+            repo_id="bartowski/NousResearch_DeepHermes-3-Llama-3-3B-Preview-GGUF",
+            filename="NousResearch_DeepHermes-3-Llama-3-3B-Preview-Q8_0.gguf",
+            chat_format="chatml-function-calling"
+        )
+
         # Verbose mode for debugging
-        self.verbose = verbose
+        self.verbose = False
         
         # Initialize messages history
         self.messages = [
@@ -327,19 +338,7 @@ class TerminalChat:
             print(f"\nAn error occurred: {e}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Interactive Terminal Chat with Llama.cpp")
-    parser.add_argument("--model", "-m", type=str, required=True,
-                        help="Path to the GGUF model file")
-    parser.add_argument("--no-functions", action="store_true",
-                        help="Disable function calling by default")
-    parser.add_argument("--verbose", "-v", action="store_true",
-                        help="Enable verbose mode for debugging")
-    parser.add_argument("--direct-args", "-d", action="store_true",
-                        help="Use arguments directly extracted from query without LLM confirmation")
-    
-    args = parser.parse_args()
-    
-    chat = TerminalChat(model_path=args.model, verbose=args.verbose)
+    chat = TerminalChat()
     chat.chat(use_functions=not args.no_functions)
 
 if __name__ == "__main__":
