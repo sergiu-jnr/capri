@@ -339,7 +339,7 @@ class TerminalChat:
 
 def main():
     chat = TerminalChat()
-    chat.chat(use_functions=not args.no_functions)
+    chat.chat()
 
 if __name__ == "__main__":
     main()
